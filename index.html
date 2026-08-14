@@ -3,330 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Stream Room - RadioAir</title>
+    <title>RadioAir - Music Stream</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
             width: 100%;
             height: 100vh;
             overflow: hidden;
-            background: #000;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%);
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        #canvas {
+        
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: rgba(20, 20, 40, 0.9);
+            border: 3px solid #ff00c8;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(255, 0, 200, 0.5), 0 0 60px rgba(0, 255, 255, 0.3);
+        }
+        
+        .title {
+            text-align: center;
+            color: #00ffff;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #ff00c8;
+            font-size: 16px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #ff00c8;
+        }
+        
+        .buttons-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .button-group {
+            text-align: center;
+        }
+        
+        .button-label {
             display: block;
-            width: 100%;
-            height: 100%;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #fff;
         }
-        #uploadContainer {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(255, 0, 200, 0.2);
+        
+        .radio-button {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .button-pink {
+            background: #ff00c8;
+            border-color: #ff00ff;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 0, 200, 0.6);
+        }
+        
+        .button-blue {
+            background: #0099ff;
+            border-color: #00ccff;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 153, 255, 0.6);
+        }
+        
+        .button-green {
+            background: #00ff00;
+            border-color: #00ff88;
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+        }
+        
+        .button-orange {
+            background: #ffaa00;
+            border-color: #ffcc00;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 170, 0, 0.6);
+        }
+        
+        .radio-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .radio-button:active {
+            transform: scale(0.95);
+        }
+        
+        .upload-section {
+            background: rgba(255, 0, 200, 0.1);
             border: 2px solid #ff00c8;
             border-radius: 10px;
-            padding: 15px;
-            z-index: 100;
-            min-width: 250px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
-        #uploadContainer input[type="file"] {
-            display: block;
-            margin: 10px 0;
+        
+        .upload-title {
             color: #ff00c8;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 0 0 10px #ff00c8;
+        }
+        
+        .song-input {
+            margin-bottom: 12px;
+        }
+        
+        .song-label {
+            display: block;
+            color: #00ffff;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            border-radius: 5px;
+            color: #00ffff;
             cursor: pointer;
         }
-        .button-slot {
-            margin: 8px 0;
-            font-size: 12px;
-            color: #ff00c8;
-        }
+        
         .song-name {
-            color: #00ffff;
+            color: #00ff00;
             font-size: 11px;
             margin-top: 3px;
+            word-break: break-all;
+        }
+        
+        .status {
+            text-align: center;
+            color: #00ffff;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+        
+        .now-playing {
+            text-align: center;
+            color: #ffaa00;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    
-    <div id="uploadContainer">
-        <div style="color: #ff00c8; font-weight: bold; margin-bottom: 10px; font-size: 14px;">UPLOAD SONGS</div>
-        <div class="button-slot">
-            Button 1 (Pink): <input type="file" id="song1" accept="audio/*">
-            <div class="song-name" id="name1">-</div>
+    <div class="container">
+        <div class="title">🎵 RADIO AIR</div>
+        <div class="subtitle">Music Stream & Interactive</div>
+        
+        <div class="upload-section">
+            <div class="upload-title">📤 UPLOAD DEINE SONGS</div>
+            
+            <div class="song-input">
+                <label class="song-label">Song 1 (Pink):</label>
+                <input type="file" id="song1" accept="audio/*">
+                <div class="song-name" id="name1">-</div>
+            </div>
+            
+            <div class="song-input">
+                <label class="song-label">Song 2 (Blau):</label>
+                <input type="file" id="song2" accept="audio/*">
+                <div class="song-name" id="name2">-</div>
+            </div>
+            
+            <div class="song-input">
+                <label class="song-label">Song 3 (Grün):</label>
+                <input type="file" id="song3" accept="audio/*">
+                <div class="song-name" id="name3">-</div>
+            </div>
+            
+            <div class="song-input">
+                <label class="song-label">Song 4 (Orange):</label>
+                <input type="file" id="song4" accept="audio/*">
+                <div class="song-name" id="name4">-</div>
+            </div>
+            
+            <div class="status">✓ Bereit. Lade bis zu 4 Songs hoch und drücke die Knöpfe zum abspielen!</div>
         </div>
-        <div class="button-slot">
-            Button 2 (Blau): <input type="file" id="song2" accept="audio/*">
-            <div class="song-name" id="name2">-</div>
+        
+        <div class="buttons-container">
+            <div class="button-group">
+                <span class="button-label">Song 1</span>
+                <button class="radio-button button-pink" onclick="playSong(1)">▶</button>
+            </div>
+            <div class="button-group">
+                <span class="button-label">Song 2</span>
+                <button class="radio-button button-blue" onclick="playSong(2)">▶</button>
+            </div>
+            <div class="button-group">
+                <span class="button-label">Song 3</span>
+                <button class="radio-button button-green" onclick="playSong(3)">▶</button>
+            </div>
+            <div class="button-group">
+                <span class="button-label">Song 4</span>
+                <button class="radio-button button-orange" onclick="playSong(4)">▶</button>
+            </div>
         </div>
-        <div class="button-slot">
-            Button 3 (Grün): <input type="file" id="song3" accept="audio/*">
-            <div class="song-name" id="name3">-</div>
-        </div>
-        <div class="button-slot">
-            Button 4 (Orange): <input type="file" id="song4" accept="audio/*">
-            <div class="song-name" id="name4">-</div>
-        </div>
+        
+        <div class="now-playing" id="nowPlaying">🎧 Warte auf deine Auswahl...</div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <audio id="player" style="display:none;"></audio>
+    
     <script>
-        // Scene Setup
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0a0a0a);
-        
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 2, 5);
-        camera.lookAt(0, 1.5, 0);
-        
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
-        document.body.appendChild(renderer.domElement);
-
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
-        scene.add(ambientLight);
-        
-        const pointLight1 = new THREE.PointLight(0x00ffff, 1, 50);
-        pointLight1.position.set(0, 3, -2);
-        scene.add(pointLight1);
-        
-        const pointLight2 = new THREE.PointLight(0xff00ff, 0.8, 40);
-        pointLight2.position.set(-3, 2, 3);
-        scene.add(pointLight2);
-
-        // Floor
-        const floorGeometry = new THREE.PlaneGeometry(20, 30);
-        const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x1a1a2e });
-        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-        floor.rotation.x = -Math.PI / 2;
-        floor.position.y = 0;
-        scene.add(floor);
-
-        // Red Carpet with Stars
-        const carpetGeometry = new THREE.PlaneGeometry(3, 12);
-        const carpetCanvas = document.createElement('canvas');
-        carpetCanvas.width = 256;
-        carpetCanvas.height = 768;
-        const carpetCtx = carpetCanvas.getContext('2d');
-        
-        carpetCtx.fillStyle = '#cc0033';
-        carpetCtx.fillRect(0, 0, carpetCanvas.width, carpetCanvas.height);
-        
-        carpetCtx.fillStyle = '#ffaa00';
-        for (let i = 0; i < 40; i++) {
-            const x = Math.random() * carpetCanvas.width;
-            const y = Math.random() * carpetCanvas.height;
-            const size = Math.random() * 30 + 15;
-            drawStar(carpetCtx, x, y, size);
-        }
-        
-        const carpetTexture = new THREE.CanvasTexture(carpetCanvas);
-        const carpetMaterial = new THREE.MeshStandardMaterial({ map: carpetTexture, emissive: 0xff6600, emissiveIntensity: 0.3 });
-        const carpet = new THREE.Mesh(carpetGeometry, carpetMaterial);
-        carpet.rotation.x = -Math.PI / 2;
-        carpet.position.y = 0.01;
-        carpet.position.z = 0;
-        scene.add(carpet);
-
-        function drawStar(ctx, cx, cy, size) {
-            const points = 5;
-            const outerRadius = size;
-            const innerRadius = size * 0.4;
-            let x, y;
-            ctx.beginPath();
-            for (let i = 0; i < points * 2; i++) {
-                const radius = i % 2 === 0 ? outerRadius : innerRadius;
-                x = cx + Math.cos((i * Math.PI) / points - Math.PI / 2) * radius;
-                y = cy + Math.sin((i * Math.PI) / points - Math.PI / 2) * radius;
-                if (i === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            }
-            ctx.closePath();
-            ctx.stroke();
-            ctx.fill();
-        }
-
-        // Sofas
-        const sofaGeometry = new THREE.BoxGeometry(2, 1, 1.5);
-        const sofaMaterial = new THREE.MeshStandardMaterial({ color: 0x4a3a6a });
-        
-        const sofa1 = new THREE.Mesh(sofaGeometry, sofaMaterial);
-        sofa1.position.set(-6, 0.5, 2);
-        scene.add(sofa1);
-        
-        const sofa2 = new THREE.Mesh(sofaGeometry, sofaMaterial);
-        sofa2.position.set(6, 0.5, 2);
-        scene.add(sofa2);
-
-        // Control Panel (Buttons)
-        const buttonColors = [0xff00ff, 0x0099ff, 0x00ff00, 0xffaa00];
-        const buttons = [];
-        
-        for (let i = 0; i < 4; i++) {
-            const buttonGeometry = new THREE.BoxGeometry(0.6, 0.6, 0.3);
-            const buttonMaterial = new THREE.MeshStandardMaterial({ 
-                color: buttonColors[i],
-                emissive: buttonColors[i],
-                emissiveIntensity: 0.5
-            });
-            const button = new THREE.Mesh(buttonGeometry, buttonMaterial);
-            button.position.set(-1.2 + i * 0.8, 2.2, 0);
-            button.castShadow = true;
-            scene.add(button);
-            buttons.push({ mesh: button, index: i, color: buttonColors[i] });
-        }
-
-        // Screen
-        const screenGeometry = new THREE.BoxGeometry(4, 2.5, 0.2);
-        const screenMaterial = new THREE.MeshStandardMaterial({ color: 0x001a4d });
-        const screen = new THREE.Mesh(screenGeometry, screenMaterial);
-        screen.position.y = 3;
-        screen.position.z = -3;
-        scene.add(screen);
-
-        // Screen Display (Boombox visual)
-        const screenDisplayGeometry = new THREE.PlaneGeometry(3.8, 2.3);
-        const screenDisplayCanvas = document.createElement('canvas');
-        screenDisplayCanvas.width = 512;
-        screenDisplayCanvas.height = 384;
-        const screenCtx = screenDisplayCanvas.getContext('2d');
-        
-        function updateScreenDisplay() {
-            screenCtx.fillStyle = '#000033';
-            screenCtx.fillRect(0, 0, screenDisplayCanvas.width, screenDisplayCanvas.height);
-            
-            screenCtx.strokeStyle = '#00ffff';
-            screenCtx.lineWidth = 3;
-            screenCtx.strokeRect(20, 20, screenDisplayCanvas.width - 40, screenDisplayCanvas.height - 40);
-            
-            screenCtx.fillStyle = '#00ffff';
-            screenCtx.font = 'bold 36px Arial';
-            screenCtx.textAlign = 'center';
-            screenCtx.fillText('MUSIC STREAM', screenDisplayCanvas.width / 2, 80);
-            screenCtx.fillText('& INTERACTIVE', screenDisplayCanvas.width / 2, 130);
-            screenCtx.fillText('RADIO', screenDisplayCanvas.width / 2, 180);
-            
-            screenCtx.drawImage(screenDisplayCanvas, 0, 0);
-        }
-        updateScreenDisplay();
-        
-        const screenDisplayTexture = new THREE.CanvasTexture(screenDisplayCanvas);
-        const screenDisplayMaterial = new THREE.MeshStandardMaterial({ map: screenDisplayTexture });
-        const screenDisplay = new THREE.Mesh(screenDisplayGeometry, screenDisplayMaterial);
-        screenDisplay.position.set(0, 3, -2.85);
-        scene.add(screenDisplay);
-
-        // Navigation Arrows (4 arrows on carpet)
-        const arrowGeometry = new THREE.ConeGeometry(0.3, 0.5, 8);
-        const arrowMaterial = new THREE.MeshStandardMaterial({ 
-            color: 0x00ffff,
-            emissive: 0x00ffff,
-            emissiveIntensity: 0.6
-        });
-        
-        const arrowPositions = [
-            { pos: [0, 0.3, 4], rot: 0 },
-            { pos: [-1, 0.3, 2], rot: Math.PI / 4 },
-            { pos: [1, 0.3, 2], rot: -Math.PI / 4 },
-            { pos: [0, 0.3, 0.5], rot: Math.PI }
-        ];
-        
-        arrowPositions.forEach(arrow => {
-            const arrowMesh = new THREE.Mesh(arrowGeometry, arrowMaterial);
-            arrowMesh.position.set(...arrow.pos);
-            arrowMesh.rotation.z = arrow.rot;
-            scene.add(arrowMesh);
-        });
-
-        // Player state
-        let currentlyPlaying = null;
         const songs = { 1: null, 2: null, 3: null, 4: null };
         const songNames = { 1: '-', 2: '-', 3: '-', 4: '-' };
-
-        // File upload handlers
+        const audio = document.getElementById('player');
+        
+        // Upload Handler
         for (let i = 1; i <= 4; i++) {
             document.getElementById(`song${i}`).addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (file) {
                     songs[i] = URL.createObjectURL(file);
-                    songNames[i] = file.name.substring(0, 20);
-                    document.getElementById(`name${i}`).textContent = songNames[i];
+                    songNames[i] = file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name;
+                    document.getElementById(`name${i}`).textContent = '✓ ' + songNames[i];
                 }
             });
         }
-
-        // Audio element
-        const audio = new Audio();
-        audio.crossOrigin = "anonymous";
-
-        // Mouse click detection for buttons
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-
-        window.addEventListener('click', (event) => {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-            raycaster.setFromCamera(mouse, camera);
-
-            const buttonMeshes = buttons.map(b => b.mesh);
-            const intersects = raycaster.intersectObjects(buttonMeshes);
-
-            if (intersects.length > 0) {
-                const clickedButton = buttons.find(b => b.mesh === intersects[0].object);
-                const songIndex = clickedButton.index + 1;
-                
-                if (songs[songIndex]) {
-                    audio.src = songs[songIndex];
-                    audio.play();
-                    currentlyPlaying = songIndex;
-                }
+        
+        // Play Function
+        function playSong(index) {
+            if (songs[index]) {
+                audio.src = songs[index];
+                audio.play();
+                document.getElementById('nowPlaying').textContent = `🎵 Spielt: ${songNames[index]}`;
+            } else {
+                document.getElementById('nowPlaying').textContent = `❌ Song ${index} nicht hochgeladen!`;
             }
-        });
-
-        // Keyboard controls for movement
-        const keys = {};
-        window.addEventListener('keydown', (e) => keys[e.key.toLowerCase()] = true);
-        window.addEventListener('keyup', (e) => keys[e.key.toLowerCase()] = false);
-
-        // Animation loop
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // Movement
-            const speed = 0.1;
-            if (keys['w'] || keys['arrowup']) camera.position.z -= speed;
-            if (keys['s'] || keys['arrowdown']) camera.position.z += speed;
-            if (keys['a'] || keys['arrowleft']) camera.position.x -= speed;
-            if (keys['d'] || keys['arrowright']) camera.position.x += speed;
-
-            // Button glow pulse
-            buttons.forEach(button => {
-                button.mesh.rotation.y += 0.01;
-                button.mesh.material.emissiveIntensity = 0.4 + Math.sin(Date.now() * 0.005) * 0.2;
-            });
-
-            // Screen glow
-            screenDisplay.material.emissiveIntensity = 0.3 + Math.sin(Date.now() * 0.003) * 0.15;
-
-            renderer.render(scene, camera);
         }
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        animate();
     </script>
 </body>
 </html>
