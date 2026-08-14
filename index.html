@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Radio Air — Virtual Room</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="ui-top">
+    <div id="uploads">
+      <label>Song 1: <input type="file" id="file1" accept="audio/*"></label>
+      <label>Song 2: <input type="file" id="file2" accept="audio/*"></label>
+      <label>Song 3: <input type="file" id="file3" accept="audio/*"></label>
+      <label>Song 4: <input type="file" id="file4" accept="audio/*"></label>
+    </div>
+    <div id="status">Status: Bereit. Lade bis zu 4 Songs hoch und laufe mit den Pfeiltasten zum Radio.</div>
+  </div>
+
+  <div id="canvas-container"></div>
+
+  <div id="controls">
+    <button id="leftBtn" class="nav">◀</button>
+    <button id="forwardBtn" class="nav">▲</button>
+    <button id="rightBtn" class="nav">▶</button>
+  </div>
+
+  <div id="radio-ui" class="hidden">
+    <div>Radio Controls (in der Nähe):</div>
+    <div class="radio-buttons">
+      <button class="play-btn" data-index="0">Song 1</button>
+      <button class="play-btn" data-index="1">Song 2</button>
+      <button class="play-btn" data-index="2">Song 3</button>
+      <button class="play-btn" data-index="3">Song 4</button>
+      <button id="effectBtn">Effekt</button>
+    </div>
+    <div id="sit-info" class="sit-hidden">Du sitzt. Drücke Pfeil nach vorne um aufzustehen.</div>
+  </div>
+
+  <div id="help">
+    <p>Benutze die Pfeile oder ← → ↑ um dich im Raum zu bewegen. Gehe zum Radio in der Mitte und drücke einen Knopf, um einen hochgeladenen Song abzuspielen. Drücke "Effekt" für Feuerwerk.</p>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
