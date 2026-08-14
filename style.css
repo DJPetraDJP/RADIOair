@@ -1,0 +1,33 @@
+/* style.css - basic layout for RADIOair
+   - responsive container
+   - avatar and radio visuals
+   - radio-ui positioning
+*/
+:root{
+  --bg:#0b0f16;
+  --fg:#e6eef6;
+  --accent:#4dd0e1;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+body{background:linear-gradient(180deg,#061017 0%,#0b1520 100%);color:var(--fg);display:flex;flex-direction:column}
+#ui-top{padding:12px;display:flex;gap:16px;align-items:center}
+#uploads label{font-size:13px;color:var(--fg);margin-right:8px}
+#status{font-size:13px;opacity:0.9}
+#canvas-container{flex:1;position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,0.03)}
+.room{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);display:flex;align-items:center;justify-content:center}
+.radio{width:160px;height:120px;border-radius:8px;background:linear-gradient(180deg,#223344,#112028);box-shadow:0 8px 30px rgba(0,0,0,0.6);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--fg);border:2px solid rgba(255,255,255,0.04)}
+.radio .knobs{display:flex;gap:8px;margin-top:8px}
+.knob{width:28px;height:28px;border-radius:50%;background:#0b2430;border:2px solid rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:12px}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--accent);position:absolute;left:48%;top:48%;transform:translate(-50%,-50%);box-shadow:0 6px 18px rgba(77,208,225,0.12)}
+#controls{position:fixed;right:16px;bottom:16px;display:flex;gap:8px}
+.nav{background:#0e2630;border:none;color:var(--fg);padding:10px 12px;border-radius:6px;cursor:pointer}
+#radio-ui{position:fixed;left:16px;bottom:16px;background:rgba(10,18,22,0.9);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+.hidden{display:none}
+.radio-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.play-btn{background:#15313a;border:1px solid rgba(255,255,255,0.03);color:var(--fg);padding:6px 8px;border-radius:6px;cursor:pointer}
+#effectBtn{background:#2b4a4f;border:none;color:var(--fg);padding:6px 10px;border-radius:6px;cursor:pointer}
+#help{padding:10px;font-size:13px;color:rgba(230,238,246,0.85)}
+.sit-hidden{opacity:0.5;margin-top:8px}
+.firework{position:absolute;border-radius:50%;pointer-events:none}
+@media (max-width:640px){#ui-top{flex-direction:column;align-items:flex-start}#controls{right:8px;bottom:80px}}
