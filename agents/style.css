@@ -1,0 +1,8 @@
+html,body{height:100%;margin:0;background:#0b0b0f;font-family:Arial,Helvetica,sans-serif;color:#fff}
+#canvas-container{width:100%;height:100vh;display:block;position:relative}
+#ui{position:absolute;left:12px;top:12px;z-index:10}
+#uploadRow{display:flex;gap:8px;background:rgba(0,0,0,0.4);padding:8px;border-radius:8px}
+.slot{display:flex;flex-direction:column;align-items:center}
+.uploadBtn,.playBtn{background:#ff7ab5;border:0;padding:6px 8px;color:#111;border-radius:6px;cursor:pointer;margin-bottom:4px;font-weight:700}
+.playBtn[disabled]{opacity:0.45;cursor:not-allowed}
+#hint{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,0.06);padding:8px;border-radius:8px}
