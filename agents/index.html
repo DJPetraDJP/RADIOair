@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>RADIOair - 3D Raum Demo</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Three.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.min.js"></script>
+</head>
+<body>
+  <div id="ui">
+    <div id="uploadRow">
+      <div class="slot">
+        <button class="uploadBtn" data-slot="0">Upload 1</button>
+        <button class="playBtn" data-slot="0" disabled>Play</button>
+      </div>
+      <div class="slot">
+        <button class="uploadBtn" data-slot="1">Upload 2</button>
+        <button class="playBtn" data-slot="1" disabled>Play</button>
+      </div>
+      <div class="slot">
+        <button class="uploadBtn" data-slot="2">Upload 3</button>
+        <button class="playBtn" data-slot="2" disabled>Play</button>
+      </div>
+      <div class="slot">
+        <button class="uploadBtn" data-slot="3">Upload 4</button>
+        <button class="playBtn" data-slot="3" disabled>Play</button>
+      </div>
+      <input id="fileInput" type="file" accept="audio/*" style="display:none" />
+    </div>
+    <div id="hint">Pfeiltasten zum Laufen. Klick auf die hellen Kästchen um dorthin zu gehen.</div>
+  </div>
+  <div id="canvas-container"></div>
+  <script src="app.js"></script>
+</body>
+</html>
